@@ -16,7 +16,7 @@ object Exceptions extends App {
     else 42
 
   val potentialFail = try {
-    getInt(true)
+    getInt(false)
   } catch {
     case e: RuntimeException => println("caught runtime exception")
   } finally {
@@ -34,4 +34,42 @@ object Exceptions extends App {
   val exc = new MyException
 
 //  throw exc
+//  throw OutOfMemoryError()
+//  throw StackOverflowError()
+
+  class IntOverflowException extends RuntimeException
+  class IntUnderflowException extends RuntimeException
+  class MathCalculationException extends RuntimeException("Division by zero")
+
+  class PocketCalculator {
+    def add(x: Int, y: Int): Int = {
+      val result = x + y
+      if (x > 0 && y > 0 && result < 0) throw new IntOverflowException
+      else if (x < 0 && y < 0 && result > 0) throw new IntUnderflowException
+      return result
+    }
+
+    def sub(x: Int, y: Int): Int = {
+      val result = x - y
+      if (x > 0 && y < 0 && result < 0) throw new IntOverflowException
+      else if (x < 0 && y > 0 && result > 0) throw new IntUnderflowException
+      return result
+    }
+    def mul(x: Int, y: Int): Int = {
+      val result = x * y
+      if (x > 0 && y > 0 && result < 0) throw new IntOverflowException
+      else if (x < 0 && y > 0 && result > 0) throw new IntUnderflowException
+      else if (x > 0 && y < 0 && result > 0) throw new IntUnderflowException
+      else if (x < 0 && y < 0 && result < 0) throw new IntUnderflowException
+      return result
+    }
+    def div(x: Int, y: Int): Int = {
+      if (y == 0) throw new MathCalculationException
+      else x / y
+    }
+  }
+
+  val calc = new PocketCalculator
+  println(calc.div(1, 0))
+  println(calc.add(Int.MaxValue, 1))
 }
