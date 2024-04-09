@@ -26,4 +26,12 @@ object AnonymousFunctions extends App {
   // MORE syntactic sugar
   val niceIncrementer: Int => Int = _ + 1 // equivalent to (x: Int) => x + 1
   val niceAdder: (Int, Int) => Int = _ + _
+
+  /*
+    1. MyList: replace all FunctionX calls with lambdas
+    2. Rewrite the "special" adder as an anonymous function
+   */
+
+  val superAdder = (x: Int) => (y: Int) => x + y
+  println(superAdder(3)(4))
 }
