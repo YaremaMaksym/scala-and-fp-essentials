@@ -114,4 +114,10 @@ object ListTest extends App {
   listOfIntegers.foreach(println)
   println(listOfIntegers.sort((x, y) => y - x))
   println(anotherListOfIntegers.zipWith[String, String](listOfStrings, _ + "-" + _))
+
+  val combinations = for {
+    n <- listOfIntegers
+    s <- listOfStrings
+  } yield ("" + n + "-" + s)
+  println(s"combinations = ${combinations}")
 }
