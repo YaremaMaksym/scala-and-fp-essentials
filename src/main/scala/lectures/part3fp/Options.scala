@@ -24,7 +24,6 @@ object Options extends App {
   val betterChainedResult = betterUnsafeMethod.orElse(betterBackupMethod)
 
 
-
   /*
     Functions on Options
    */
@@ -36,4 +35,56 @@ object Options extends App {
   println(myFirstOption.flatMap(x => Option(x * 10)))
   println(myFirstOption.filter(_ > 10))
 
+  /*
+    Exercise
+   */
+  val config: Map[String, String] = Map(
+    // fetch from elsewhere
+    "host" -> "176.45.36.1",
+    "port" -> "13"
+  )
+
+  class Connection {
+    def connect = "Connected" // connect to some server
+  }
+  object Connection {
+    def random = new Random(System.nanoTime())
+    def apply(host: String, port: String): Option[Connection] =
+      if (random.nextBoolean()) Some(new Connection)
+      else None
+  }
+
+  // try to establish a connection, if so - print the connect method
+  val host = config.get("host")
+  val port = config.get("port")
+  /*
+      if (h != null)
+        if (p != null)
+          return Connection(h, p)
+
+      return null
+   */
+  val connection = host.flatMap(h => port.flatMap(p => Connection(h, p)))
+  /*
+      if (c != null)
+        return c.connect
+
+      return null
+   */
+  val connectionStatus = connection.map(c => c.connect)
+  connectionStatus.foreach(println)
+
+
+  config.get("host")
+    .flatMap(h => config.get("port")
+      .flatMap(p => Connection(h, p))
+      .map(c => c.connect))
+    .foreach(println)
+
+  // for-comprehensions
+  val forConnectionStatus = for {
+    host <- config.get("host")
+    port <- config.get("port")
+    connection <- Connection(host, port)
+  } yield connection.connect
 }
