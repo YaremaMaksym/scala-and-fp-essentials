@@ -1,5 +1,7 @@
 package lectures.part3fp
 
+import scala.util.Random
+
 object Options extends App {
 
   val myFirstOption: Option[Int] = Some(4)
@@ -20,6 +22,18 @@ object Options extends App {
   def betterUnsafeMethod: Option[String] = None
   def betterBackupMethod: Option[String] = Some("A valid result")
   val betterChainedResult = betterUnsafeMethod.orElse(betterBackupMethod)
-  
-  
+
+
+
+  /*
+    Functions on Options
+   */
+  println(myFirstOption.isEmpty)
+  println(myFirstOption.get) // Unsafe
+
+  // map, flatMap, filter
+  println(myFirstOption.map(_ * 2))
+  println(myFirstOption.flatMap(x => Option(x * 10)))
+  println(myFirstOption.filter(_ > 10))
+
 }
