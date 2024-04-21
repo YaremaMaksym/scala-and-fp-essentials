@@ -91,4 +91,17 @@ object AllThePatterns extends App {
     case Cons(_, Cons(specialElement, Empty)) if specialElement % 2 == 0 =>
 
   // ALL
+
+  /*
+    Question.
+   */
+
+  val numbers = List(1,2,3)
+  val numbersMatch = numbers match
+    case listOfStrings: List[String] => "list of strings"
+    case listOfNumbers: List[Int] => "list of numbers"
+    case _ => ""
+
+  println(numbersMatch) // "list of strings"
+  // JVM trick question
 }
