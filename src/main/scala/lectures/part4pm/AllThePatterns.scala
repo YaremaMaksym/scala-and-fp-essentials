@@ -1,4 +1,4 @@
-package lectures.part3fp
+package lectures.part4pm
 
 import exercises.{Cons, Empty, MyList}
 
